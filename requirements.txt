@@ -1,0 +1,3 @@
+# Core dependencies (none for now)
+# Development dependencies would go here
+# pytest>=6.0.0  # For future testing
