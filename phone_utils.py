@@ -35,17 +35,82 @@ def clean_indian_phone(phone_input):
 
 
 # Test function
-if __name__ == "__main__":
+import re
+
+
+import re
+
+def clean_indian_phone(phone_input):
+    """
+    Clean and standardize Indian phone numbers to +91XXXXXXXXXX format
+    Handles messy real-world input with prefixes, suffixes, and extra text
+    """
+    
+    if not phone_input:
+        return None
+    
+    # Convert to string
+    phone = str(phone_input).strip()
+    
+    # Remove all non-digits except +
+    digits_only = re.sub(r'[^\d+]', '', phone)
+    
+    # Handle different patterns
+    if digits_only.startswith('+91'):
+        number = digits_only[3:]  # Remove +91
+    elif digits_only.startswith('91'):
+        number = digits_only[2:]  # Remove 91
+    else:
+        number = digits_only
+    
+    # Remove leading zeros
+    number = number.lstrip('0')
+    
+    # Validate: exactly 10 digits starting with 6-9
+    if len(number) == 10 and number[0] in '6789' and number.isdigit():
+        return f"+91{number}"
+    
+    return None
+
+
+# Enhanced test function
+def test_phone_cleaner():
     test_cases = [
-        "9876543210",
-        "+91 98765 43210", 
-        "91-9876543210",
-        "098765-43210",
-        "(+91) 9876543210",
-        "invalid123"
+        # Original cases
+        ("9876543210", "+919876543210"),
+        ("+91 98765 43210", "+919876543210"),
+        ("91-9876543210", "+919876543210"),
+        ("098765-43210", "+919876543210"),
+        ("(+91) 9876543210", "+919876543210"),
+        ("invalid123", None),
+        
+        # Messy real-world cases
+        ("tel: +91-9876543210", "+919876543210"),
+        ("9876543210 (Vidit)", "+919876543210"),
+        ("91 9876 543 210 ext 123", "+919876543210"),
+        ("WhatsApp: 919876543210", "+919876543210"),
+        ("Call me at 09876543210", "+919876543210"),
+        ("+919876543210#123", "+919876543210"),
+        ("Mobile - 98765-43210", "+919876543210"),
+        ("   +91  9876  543210   ", "+919876543210"),
+        ("7876543210", "+917876543210"),
+        ("5876543210", None),  # Invalid start digit
+        ("", None)
     ]
     
-    print("Testing phone number cleaner:")
-    for test in test_cases:
-        result = clean_indian_phone(test)
-        print(f"'{test}' → '{result}'")
+    passed = 0
+    total = len(test_cases)
+    
+    print("Testing enhanced phone cleaner:")
+    for input_val, expected in test_cases:
+        result = clean_indian_phone(input_val)
+        status = "✅" if result == expected else "❌"
+        print(f"{status} '{input_val}' → '{result}' (expected: '{expected}')")
+        if result == expected:
+            passed += 1
+    
+    print(f"\nSuccess Rate: {passed}/{total} ({passed/total*100:.1f}%)")
+    return passed == total
+
+if __name__ == "__main__":
+    test_phone_cleaner()
