@@ -1,3 +1,6 @@
+> **⚠️ Learning Project Disclaimer**  
+> This is a learning project by a Product Manager transitioning to ML Engineering. Code is developed through AI-assisted problem-solving, brainstorming, and guided implementation. The author contributes domain knowledge, test cases, and architectural decisions. Use at your own risk for production purposes.
+
 # Indian Text Utils
 
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
