@@ -10,7 +10,7 @@ setup(
     description="Utility functions for processing Indian text data - phone numbers, addresses, names, and more",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/YOUR-USERNAME/indian-text-utils",  # Update with your actual GitHub username
+    url="https://github.com/viditworks1/indian-text-utils",  # Update with your actual GitHub username
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
